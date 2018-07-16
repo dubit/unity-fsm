@@ -51,6 +51,7 @@ namespace DUCK.FSM
 		private event Action<TState> OnStateEnter;
 		private event Action<TState> OnStateExit;
 		private event Action<TState, TState> OnStateChange;
+		private event Action<TState, TState> OnStateFailedTransition;
 
 		/// <summary>
 		/// Instantiates a new FiniteStateMachine using the enum values in an enum defined by the type parameter.
@@ -149,6 +150,23 @@ namespace DUCK.FSM
 				{
 					handler();
 				}
+			};
+
+			return this;
+		}
+
+		/// <summary>
+		/// Adds a handler for failure to enter a state
+		/// </summary>
+		/// <param name="handler">The handler</param>
+		/// <returns>The instance of FiniteStatemachine to comply with fluent interface pattern</returns>
+		public FiniteStateMachine<TState> OnFailedTransition(Action<TState, TState> handler)
+		{
+			if (handler == null) { throw new ArgumentNullException("handler"); }
+
+			OnStateFailedTransition += (from, to) =>
+			{
+				handler(from, to);
 			};
 
 			return this;
@@ -261,6 +279,10 @@ namespace DUCK.FSM
 						OnStateExit(CurrentState);
 					}
 					transition.Begin();
+				}
+				else if(OnStateFailedTransition != null)
+				{
+					OnStateFailedTransition(transition.FromState, transition.ToState);
 				}
 			}
 		}
