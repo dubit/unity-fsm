@@ -2,7 +2,6 @@
 
 namespace DUCK.FSM.Editor.Tests
 {
-	[TestFixture]
 	public class FSMTests
 	{
 		private const string LOAD_COMMAND = "load";
