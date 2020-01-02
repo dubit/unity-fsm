@@ -1,0 +1,11 @@
+{
+  "name": "com.dubitlimited.duck.unity-fsm",
+  "displayName": "Duck FSM",
+  "version": "1.1.0",
+  "description": "A lightweight finite state machine",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dubit/unity-fsm"
+  },
+  "author": "Dubit Limited"
+}
